@@ -3,10 +3,10 @@ import os
 # URL for the MySQL database. Run the command in the terminal to define the env var
 
 # Linux:
-# export DEV_DATABASE_URL=mysql+pymysql://root:1700KoalaRanch608@localhost:3306/database_name
+# export DEV_DATABASE_URL=mysql+pymysql://<username>:<password>@localhost:<port>/<database_name>
 
 # Windows:
-# SET DEV_DATABASE_URL=mysql+pymysql://<username>:<password>@localhost:3306/database_name
+# SET DEV_DATABASE_URL=mysql+pymysql://<username>:<password>@localhost:<port>/<database_name>
 
 # Set to False in order to disable the modification tracking system
 # Good practice to avoid tracking changes from Flask-SQLAlchemy to the SQLAlchemy library
@@ -28,9 +28,7 @@ class DevelopmentConfig(Config):
     FLASK_DEBUG = True
     ENVIRONMENT = 'development'
 
-    # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:1700KoalaRanch608@localhost:3306/database_name_here
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:1700KoalaRanch608@localhost:3306/testdb"
-    # os.getenv("DEV_DATABASE_URL"))
+    SQLALCHEMY_DATABASE_URI = os.getenv("DEV_DATABASE_URL")
 
 
 class TestingConfig(Config):
