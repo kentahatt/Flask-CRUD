@@ -3,7 +3,7 @@ import os
 from App.models import Student, LoginUser
 
 # To run the application put the following command on the terminal
-# cd to the root directory of project C:\Users\kenta\PycharmProjects\mbrtest2
+# cd to the root directory of project
 # flask run
 
 # This code defines a function named make_shell_context that is used to create a shell context
