@@ -1,0 +1,236 @@
+{% extends '/base/base2.html' %}
+{% include '/base/header.html' %}
+
+
+{% block title %} Home {% endblock %}
+
+
+{% block body %}
+
+<div class = "container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbo-tron p-3">
+
+                <h2>Manage Student <button type="button" class="btn btn-success float-right"
+                data-toggle="modal" data-target="#modaladd">Add New Students</button> </h2>
+
+                <table class="table table-hover">
+                    <thead class = "thead-light">
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+
+                    {% for row in students %}
+                    <tr>
+
+                        <td>
+                            <a href="{{url_for('main.get_individual', stu_id=row.id)}}">
+                                {{row.id}}
+                            </a>
+                        </td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.phone}}</td>
+
+                        <!-- Bootstrap's custom button styles with different colors
+                            Primary (Blue), Secondary (Grey), Success (Green), Danger (Red)
+                            Warning (Yellow), Info (Cyan), Light (White/ Light Grey), Dark (Black)
+                         -->
+                        <td>
+
+                            <!-- The data-toggle here is to toggle the pop-up form "modal"
+                                 This could ask toggle the button if it was data-toggle="button"
+                             -->
+
+                            <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+
+
+                        </td>
+
+                    </tr>
+
+                    <!-- Modal Edit Student
+
+                     Modal is bootstrap's javascript modal plugin to add
+                     dialogs to the website for light-boxes, user notifications,
+                     or completely custom content
+                -->
+            <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class ="modal-header">
+
+                            <h4 class="modal-title">Edit Student</h4>
+
+                        </div>
+
+                        <!-- The method attribute specifies how to send form-data
+                            *The form-data is sent to the page specified in the action attribute
+
+                             Form-data can be sent as URL variables (with GET) or as HTTP post transaction (with POST)
+
+                             To send data between html and python one of the easiest ways is to wrap it in form-data
+                             and specify in the action attribute with url_for and specify the function name in the ()
+                        -->
+
+                        <div class="modal-body">
+                            <form action="{{url_for('main.update_student')}}" method="POST">
+
+
+                                <!-- Class="form-group" is a bootstrap class that creates a form
+                                     with different forms such as Vertical (default), Horizontal and Inline
+
+                                     Standard rules for the form layouts:
+                                     Wrap labs and form controls in <div class="form-group"> for optimum spacing
+                                     Add class "form-control" to all textual <input>, <textarea> and <select> elements
+                                -->
+
+                                <!--
+                                    The .form-group class is the easiest way to add some structure to forms.
+                                    It provides a flexible class that encourages proper grouping of labels,
+                                    controls, optional help text, and form validation messaging (From bootstrap)
+                                -->
+
+                                <div class="form-group">
+
+                                    <!-- The input tag provides a textbox for the user to input data
+                                         In this case we are updating the name, email and phone
+                                     -->
+                                    <label>Name:</label>
+                                    <input type="hidden" name="_METHOD" value="PUT"/>
+                                    <input type="hidden" name="id" value="{{row.id}}">
+                                    <input type="text" class="form-control" name="name" value="{{row.name}}">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>Email:</label>
+                                    <input type="email" class="form-control" name="email" value="{{row.email}}">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>Phone:</label>
+                                    <input type="text" class="form-control" name="phone" value="{{row.phone}}">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <button class="btn btn-primary" type="submit">Update</button>
+
+                                </div>
+
+
+                            </form>
+
+                            <!--
+                                Wrapping the Delete button in a form tag, so I am able to direct the button to the delete_student() function
+                                through the POST method, also flashes a confirmation message to refrain users to delete accidentally
+                            -->
+                            <form action="{{url_for('main.delete_student')}}" method="POST">
+                                <div class="form-group">
+                                    <input type="hidden" name="id" value="{{row.id}}">
+                                    <button class="btn btn-danger btn-xs" type="submit" onclick="return confirm('Are You Sure to Delete?')">Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            <!-- Modal for adding Student -->
+
+                <div id="modaladd" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class ="modal-header">
+
+                                <h4 class="modal-title">Add Student</h4>
+
+                            </div>
+
+                            <!-- The method attribute specifies how to send form-data
+                                *The form-data is sent to the page specified in the action attribute
+
+                                 Form-data can be sent as URL variables (with GET) or as HTTP post transaction (with POST)
+                            -->
+
+                            <div class="modal-body">
+                                <form action="{{url_for('main.get_students') }}" method="POST">
+
+                                    <!-- Class="form-group" is a bootstrap class that creates a form
+                                         with different forms such as Vertical (default), Horizontal and Inline
+
+                                         Standard rules for the form layouts:
+                                         Wrap labs and form controls in <div class="form-group"> for optimum spacing
+                                         Add class "form-control" to all textual <input>, <textarea> and <select> elements
+                                    -->
+
+                                    <div class="form-group">
+
+                                        <label>Name:</label>
+                                        <input type="text" class="form-control" name="name" required="required">
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label>Email:</label>
+                                        <input type="email" class="form-control" name="email" required="required">
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label>Phone:</label>
+                                        <input type="text" class="form-control" name="phone" required="required">
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <button class="btn btn-primary" type="submit">Add Student</button>
+
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

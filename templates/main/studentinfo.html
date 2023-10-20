@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+{% extends 'base/base2.html' %}
+{% include 'base/header.html' %}
+
+{% block body %}
+
+<body>
+<div class = "container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="col md-12">
+
+                {% if student %}
+
+                <div class = "jumbo-tron p-3">
+                    <table class="table table-hover">
+                        <thead class = "thead-light">
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+
+                            </tr>
+                        </thead>
+
+                        <tr>
+
+                            <td>{{student.id}}</td>
+                            <td>{{student.name}}</td>
+                            <td>{{student.email}}</td>
+                            <td>{{student.phone}}</td>
+
+                        </tr>
+                    </table>
+                </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+{% endblock %}

@@ -1,0 +1,2 @@
+FLASK_APP=students.py
+FLASK_DEBUG=1
