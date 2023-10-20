@@ -7,6 +7,24 @@
 - Update existing student records to edit their details
 - Delete student records from the database
 
+# Before You Start
+After cloning the repo, in the root directory add 2 additional files named '.env' and '.flaskenv'
+
+### <p>In .env you should have the following:</p>
+`SECRET_KEY=YOUR_SECRET_KEY`
+
+### In .flaskenv you should have the following:
+
+`FLASK_APP=students.py`
+
+`FLASK_DEBUG=1`
+
+    FLASK_DEBUG=1 is for development
+    activates the debugger
+    activates the automatic reloader
+    enables the debug mode on the Flask application.
+
+
 # Prerequisites
 
 Python 3 (and above)
